@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  localstore:
+    container_name: localstore_admin_backend_node
+    image: node:8.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/migrations
+    environment:
+      NODE_ENV: production
+    build: .
+    depends_on:
+      - postgresdb
+
+  postgresdb:
+    container_name: localstore_admin_backend_postgres
+    image: postgres:9.6.3
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "admin_localstore"
+      POSTGRES_PASSWORD: 123456
